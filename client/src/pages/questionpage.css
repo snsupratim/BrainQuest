@@ -1,0 +1,55 @@
+.question-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.question-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+.options {
+  margin-bottom: 15px;
+}
+
+.options label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 15px;
+}

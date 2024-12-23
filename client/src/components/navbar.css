@@ -1,0 +1,48 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #282c34;
+  color: #ffffff;
+}
+
+.navbar-logo {
+  margin-right: auto; /* Ensures the logo stays on the left */
+}
+
+.navbar-logo h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #61dafb;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-links li a:hover {
+  color: #61dafb;
+}
+
+.navbar-logout {
+  margin-left: 1rem; /* Adds spacing between links and logout button */
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between links and the logout button */
+  margin-left: auto; /* Pushes this group to the right */
+}

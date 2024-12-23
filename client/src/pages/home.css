@@ -1,0 +1,133 @@
+/* Container and layout */
+.home-container {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Header section */
+.home-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  color: #282c34;
+}
+
+.home-header p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Quests section */
+.home-quests {
+  margin-bottom: 2rem;
+}
+
+.home-quests h2 {
+  font-size: 1.8rem;
+  color: #282c34;
+  margin-bottom: 1rem;
+}
+
+.quests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Quest card */
+.quest-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quest-card h3 {
+  font-size: 1.5rem;
+  color: #0073e6;
+  margin-bottom: 0.5rem;
+}
+
+.quest-card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.quest-card button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #0073e6;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quest-card button:hover {
+  background-color: #005bb5;
+}
+
+.quest-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Featured section */
+.home-featured {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #0073e6;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.home-featured h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.home-featured p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.home-featured button {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  color: #0073e6;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.home-featured button:hover {
+  background-color: #005bb5;
+  color: #ffffff;
+}
+
+/* Footer section */
+.home-footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #282c34;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.home-footer p {
+  margin: 0;
+  font-size: 1rem;
+}

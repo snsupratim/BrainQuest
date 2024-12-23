@@ -5,8 +5,11 @@ const questionSchema = new mongoose.Schema({
   questionText: String,
   options: [String],
   correctAnswer: String,
+  correctUsers: {
+    type: [String], // This will store an array of usernames who gave the correct answer
+    default: [], // By default, it will be an empty array
+  },
 });
-
 // Define the schema for rooms
 const roomSchema = new mongoose.Schema(
   {

@@ -1,6 +1,8 @@
 import User from "../models/userModels.js";
 import bcrypt from "bcryptjs";
 import generateTokenAndSetCookie from "../utils/helpers/generaterTokenAndSetCookie.js";
+import Room from "../models/roomModel.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const signupUser = async (req, res) => {
   try {
@@ -28,6 +30,8 @@ const signupUser = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         username: newUser.username,
+        bio: newUser.bio,
+        profilePic: newUser.profilePic,
       });
     } else {
       res.status(400).json({ error: "Invalid user Data" });
@@ -55,6 +59,8 @@ const loginUser = async (req, res) => {
       name: user.name,
       email: user.email,
       username: user.username,
+      bio: user.bio,
+      profilePic: user.profilePic,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -83,8 +89,7 @@ const followUnFollowUser = async (req, res) => {
         .status(400)
         .json({ error: "you cannot follow/unfollow yourself" });
 
-    if (!userToModify || currentUser)
-      return res.status(400).json({ error: "user not found" });
+    if (!userToModify) return res.status(400).json({ error: "user not found" });
 
     const isFollowing = currentUser.following.includes(id);
     if (isFollowing) {
@@ -105,7 +110,8 @@ const followUnFollowUser = async (req, res) => {
   }
 };
 const updateUser = async (req, res) => {
-  const { name, email, username, password, profilePic, bio } = req.body;
+  const { name, email, username, password, bio } = req.body;
+  let { profilePic } = req.body;
   const userId = req.user._id;
   try {
     let user = await User.findById(userId);
@@ -121,6 +127,17 @@ const updateUser = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, salt);
       user.password = hashedPassword;
     }
+
+    if (profilePic) {
+      if (user.profilePic) {
+        await cloudinary.uploader.destroy(
+          user.profilePic.split("/").pop().split(".")[0]
+        );
+      }
+      const uploadResponse = await cloudinary.uploader.upload(profilePic);
+      profilePic = uploadResponse.secure_url;
+    }
+
     user.name = name || user.name;
     user.email = email || user.email;
     user.username = username || user.username;
@@ -128,6 +145,8 @@ const updateUser = async (req, res) => {
     user.bio = bio || user.bio;
 
     user = await user.save();
+    // password should be null
+    user.password = null;
     res.status(200).json({ message: "profile updated successfully", user });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -149,6 +168,47 @@ const getUserProfile = async (req, res) => {
     console.log("Error in getprofile", err.message);
   }
 };
+const answeruser = async (req, res) => {
+  try {
+    const { roomId, questionId } = req.params; // Extract roomId and questionId from req.params
+    const { userAnswer } = req.body; // Extract userAnswer from req.body
+    const username = req.user._id;
+
+    // Find the room by ID
+    const room = await Room.findById(roomId);
+    if (!room) {
+      return res.status(404).json({ message: "Room not found" });
+    }
+
+    // Find the question within the room's questions array by questionId
+    const question = room.questions.id(questionId);
+    if (!question) {
+      return res
+        .status(404)
+        .json({ message: "Question not found in the room" });
+    }
+
+    // Compare the user's answer with the correct answer
+    if (question.correctAnswer === userAnswer) {
+      // Check if the user has already been added to the correctUsers array
+      if (!question.correctUsers.includes(username)) {
+        question.correctUsers.push(username); // Add the user's name to the correctUsers array
+        await room.save(); // Save the updated room
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Correct answer", isCorrect: true });
+    } else {
+      return res
+        .status(200)
+        .json({ message: "Incorrect answer", isCorrect: false });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
 
 export {
   signupUser,
@@ -157,4 +217,5 @@ export {
   followUnFollowUser,
   updateUser,
   getUserProfile,
+  answeruser,
 };
